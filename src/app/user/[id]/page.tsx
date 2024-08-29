@@ -87,6 +87,7 @@ export default function UserPage({ params }: Props) {
     useEffect(() => {
         if (imageUrl) {
             const metaTags = [
+                { name: "fragment", content: "!" },
                 { name: "fc:frame", content: "vNext" },
                 { name: "fc:frame:image", content: imageUrl },
                 { name: "of:accepts:xmtp", content: "2024-02-01" },
