@@ -25,15 +25,11 @@ export default function UserPage({ params }: Props) {
     useEffect(() => {
         async function fetchImageUrl() {
             try {
-                const response = await fetch(`/api/frame?userId=${params.id}`);
+                const response = await fetch(`/api/convertImage?userId=${params.id}`);
                 const blob = await response.blob();
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    const base64data = reader.result as string;
-                    setImageUrl(base64data);
-                    console.log("Fetched imageUrl:", base64data); // Debugging line
-                };
-                reader.readAsDataURL(blob);
+                const imageUrl = URL.createObjectURL(blob);
+                setImageUrl(imageUrl);
+                console.log("Fetched imageUrl:", imageUrl); // Debugging line
             } catch (error) {
                 console.error("Error fetching imageUrl:", error);
             }
