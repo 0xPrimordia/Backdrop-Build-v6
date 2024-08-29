@@ -27,10 +27,13 @@ export default function UserPage({ params }: Props) {
             try {
                 const response = await fetch(`/api/frame?userId=${params.id}`);
                 const blob = await response.blob();
-                const url = URL.createObjectURL(blob);
-                // Append a query parameter to simulate a .png ending
-                const imageUrlWithPngEnding = `${url}.png`;
-                setImageUrl(imageUrlWithPngEnding);
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    const base64data = reader.result as string;
+                    setImageUrl(base64data);
+                    console.log("Fetched imageUrl:", base64data); // Debugging line
+                };
+                reader.readAsDataURL(blob);
             } catch (error) {
                 console.error("Error fetching imageUrl:", error);
             }
